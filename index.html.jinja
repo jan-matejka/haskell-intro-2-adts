@@ -74,7 +74,7 @@
          main is a function.
          putStrLN is a function, "Hello World!" is putStrLn argument
      -->
-    <pre><code data-language="haskell">{{ HelloWorld }}</code></pre>
+    <pre><code data-language="haskell">{{ HelloWorldHs }}</code></pre>
 
     <pre><code>% runhaskell main.hs
 Hello World!</code></pre>
@@ -90,7 +90,7 @@ Hello World!</code></pre>
 
             execute computation given by RHS and bind it's result into LHS
      -->
-<pre><code data-language="haskell">{{ WhatsYourName }}</code></pre>
+<pre><code data-language="haskell">{{ WhatsYourNameHs }}</code></pre>
 
 <pre><code>% runhaskell main.hs
 What's your name?
@@ -104,7 +104,7 @@ Hello Bob</code></pre>
     <!--
         Let's define more functions
      -->
-<pre><code data-language="haskell">{{ WhatsYourNameExpanded }}</code></pre>
+<pre><code data-language="haskell">{{ WhatsYourNameExpandedHs }}</code></pre>
 </section>
 
 <section class="slide">
@@ -115,7 +115,7 @@ Hello Bob</code></pre>
 
         It's functions all the way down.
      -->
-<pre><code data-language="haskell">{{ WhatsYourNameBind }}</code></pre>
+<pre><code data-language="haskell">{{ WhatsYourNameBindHs }}</code></pre>
 
 <pre><code data-language="haskell">(>>=) :: Monad m => m a -> (a -> m b) -> m b</code></pre>
 
@@ -169,16 +169,8 @@ head []                 =  error "Empty list"</code></pre>
            also why haskell programmers often use one-char variables
     -->
 
-<pre><code data-language="python">def write(destination):
-    """
-    :type  destination: str
-    :param destination: file path
-    """
-    raise NotImplementedError
-
-write("/foo")
-</code></pre>
-<pre><code data-language="haskell">{{ TypeAlias }}</code></pre>
+<pre><code data-language="python">{{ TypeAliasPy }}</code></pre>
+<pre><code data-language="haskell">{{ TypeAliasHs }}</code></pre>
 </section>
 
 <section class="slide">
