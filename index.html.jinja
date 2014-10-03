@@ -156,6 +156,32 @@ head []                 =  error "Empty list"</code></pre>
 </section>
 
 <section class="slide">
+    <h2>Types - aliases</h2>
+    <!--
+
+        1. Prelude = stdlib
+
+        2. explain import, hiding
+
+        3. Easy type alias
+           signature documents type
+           no need for ":param p"
+           also why haskell programmers often use one-char variables
+    -->
+
+<pre><code data-language="python">def write(destination):
+    """
+    :type  destination: str
+    :param destination: file path
+    """
+    raise NotImplementedError
+
+write("/foo")
+</code></pre>
+<pre><code data-language="haskell">{{ TypeAlias }}</code></pre>
+</section>
+
+<section class="slide">
   <h2>Footnotes</h2>
 
   <ul>
@@ -171,7 +197,6 @@ head []                 =  error "Empty list"</code></pre>
     <li><a href="https://twitter.com/yaccz">@yaccz</a></li>
   </ul>
 </section>
-
 <!-- End slides. -->
 
 
