@@ -1,6 +1,10 @@
 #! /usr/bin/python
 
-from jinja2 import Template
+try:
+    from jinja2 import Template
+except ImportError:
+    from jinja import from_string as Template
+
 from os import listdir
 
 bpath = "./examples/"

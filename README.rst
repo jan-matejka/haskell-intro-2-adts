@@ -1,5 +1,14 @@
 Usage
-=======
-just open http://yaccz.github.com/slides-haskell-intro/
+=====
+just open http://blog.headdesk.cz/media/haskell/
 
-or clone and open the index.html in a browser (tested on chromium)
+or::
+
+    git clone https://github.com/yaccz/slides-haskell-intro.git
+    cd slides-haskell-intro
+    git submodule init
+    git submodule update
+    make
+    xdg-open ./index.html
+
+Note you are gonna need jinja to build it.
