@@ -4,3 +4,6 @@
 [submodule "rainbow"]
 	path = rainbow
 	url = https://github.com/ccampbell/rainbow.git
+[submodule "rainbow.linenumbers"]
+	path = rainbow.linenumbers
+	url = https://github.com/Blender3D/rainbow.linenumbers.js.git
