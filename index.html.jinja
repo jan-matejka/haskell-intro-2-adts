@@ -133,20 +133,26 @@ Hello Bob</code></pre>
     <h2>GHCi - getting type signatures</h2>
 
     <!--
-        show ghci and explain type signatures.
+        1. show ghci and explain type signatures.
         Omit the TypeClass Constraints, that may come later.
+
+        2. explain pattern guards with mutliple definitions
+
+        3. highlight consciseness of haskell signature compared to
+           python
     -->
 
 <pre><code>% ghci
 Prelude> :t head</code></pre>
-<pre><code data-language="haskell">head :: [a] -> a</code></pre>
+<pre><code data-language="haskell">head :: [a] -> a
+head (x:_)              =  x
+head []                 =  error "Empty list"</code></pre>
 <pre><code data-language="python">def head(xs):
+    """
+    :type xs: [object]
+    :returns: object
+    """
     return xs[0]</code></pre>
-
-<br><br><br><br>
-
-<pre><code>Prelude> :t (>>=)</code></pre>
-<pre><code data-language="haskell">(>>=) :: Monad m => m a -> (a -> m b) -> m b</code></pre>
 </section>
 
 <section class="slide">
