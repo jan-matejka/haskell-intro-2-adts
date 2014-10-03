@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=1024, user-scalable=no">
 
-  <title>Twisted Intro</title>
+  <title>Haskell Intro</title>
 
   <!-- Required stylesheet -->
   <link rel="stylesheet" href="deck/core/deck.core.css">
@@ -36,232 +36,35 @@
 <!-- Begin slides. Just make elements with a class of slide. -->
 
 <section class="slide">
-  <h2>Twisted</h2>
+  <h2>Haskell</h2>
 
-  <div>Event-driven networking engine in Python licensed under <a href="http://www.opensource.org/licenses/mit-license.php">MIT license</a>.</div>
+    <ul>
+        <li>general purpose</li>
+        <li>purely functional</li>
+        <li>strong static typing</li>
+        <li>lazy evaluated</li>
+        <li>Garbage collected</li>
+        <li>nothing mutable</li>
+    </ul>
 </section>
 
 <section class="slide">
-  <h2>Why should you care?</h2>
-
-  <ul>
-    <li><a href="https://en.wikipedia.org/wiki/C10k_problem">10k problem</a></li>
-    <li>IO bound applications</li>
-    <li>async IO</li>
-    <li>without thread-like API</li>
-    <li>cooperative multitasking</li>
-    <li>elegant design of protocol implementation</li>
-  </ul>
+  <pre><code data-language="haskell" class="lined">main = putStrLn "Hello World!"</code></pre>
 </section>
-
-<section class="slide">
-  <h2>History</h2>
-
-  <ul>
-    <li>Starts at year 2000</li>
-    <li><a href="https://twitter.com/glyph">@glyph</a>, the creator of Twisted, was working on a text-based multiplayer game called Twisted Reality</li>
-    <li>in java, with threads (which deadlocked, caused bugs and scaled poorly)</li>
-    <li>Alternative found in python <a href="http://docs.python.org/library/select.html">select</a> module</li>
-    <li>Worked much better and gradually evolved into the netwoking engine.</li>
-  </ul>
-</section>
-
-
-<section class="slide">
-  <h2>What is Twisted?</h2>
-
-  <ul>
-    <li>Framework for asynchronous <strong>programming</strong></li>
-    <li>It's not just asynchronous layer in between socket and synchronous code</li>
-    <li>This asynchronny fundamentally affects how you write and think about the code
-      <ul>
-        <li>I/O performed via callbacks which makes the code nonlinear</li>
-        <li>troublesome use of libraries without async interface</li>
-      </ul>
-    </li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>Features</h2>
-
-  <ul>
-    <li>Reactor Loop</li>
-    <li>Deferred</li>
-    <li>Transport &amp; protocol separation</li>
-    <li>Protocol implementations</li>
-    <li>Foreign Loop support</li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>Reactor Loop</h2>
-
-  <div><img style="width: 40%; height: 40%;" src="./assets/reactor-callback.png" alt="Reactor Loop diagram" /></div>
-</section>
-
-<section class="slide">
-  <h2>Deferred</h2>
-
-  <ul>
-    <li>An object returned instead of the result</li>
-    <li>Attached functions in callback/errback chains.</li>
-    <li>When the result actually arrives the callback chain gets executed</li>
-    <li>Hard to describe, easier to read the <a href="http://twistedmatrix.com/trac/browser/tags/releases/twisted-11.0.0/twisted/internet/defer.py#L467">source code</a></li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>Deferred callback chains</h2>
-
-  <img src="./assets/deferred-process.png" style="width: 40%; height: 40%;" alt="deferred proccess" />
-</section>
-
-<section class="slide">
-  <pre><code class="python lined"># Deferred example
-def errback(reason):
-    print "Oh noes: {0}".format(reason)
-    sys.exit(1)
-
-d = twisted.web.client.Agent().request('GET', url, Headers())
-d.addCallback(lambda response: r.deliverBody(YourProtocol()))
-d.addErrback(errback)
-d.addBoth(lambda _: reactor.stop())
-
-reactor.run()</code></pre>
-</section>
-
-<section class="slide">
-  <h2>Transport &amp; protocol separation</h2>
-
-  <ul>
-    <li>Layer abstraction/encapsulation similar to <a href="http://en.wikipedia.org/wiki/TCP/IP_model">TCP/IP model</a></li>
-    <li>example: json-rpc - http/netstrings</li>
-    <li>3 main parts<ul>
-      <li>Transports</li>
-      <li>Factories</li>
-      <li>Protocols</li>
-      </ul>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>flow / object lifetime</h2>
-
-  <ol>
-    <li>Transport (with a factory) listens on TCP socket</li>
-    <li>When client connects, factory creates the Protocol object</li>
-    <li>Transport delivers data into the Protocol</li>
-    <li>Protocol handles the data</li>
-    <li>When connection is terminated, protocol object is destroyed</li>
-  </ol>
-</section>
-
-<section class="slide">
-  <h2>Protocol implementations</h2>
-
-  <ul>
-    <li>Big advantage is many existing implementations of standard protocols</li>
-    <li>like HTTP, IRC, XMPP, SMTP, etc</li>
-    <li>using them is just a matter of implementating the prepared interfaces:
-      <ol><li>deriving the protocol interface</li>
-        <li>implementing the event methods</li>
-        <li>attaching the protocol to transport</li>
-        <li>and starting the reactor</li>
-      </ol>
-    </li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>IRC protocol example</h2>
-  <pre><code class="python lined">class IRCClient(basic.LineReceiver):
-    def userJoined(self, user, channel):
-        """Called when I see another user joining a channel.
-        """
-        pass
-
-    def topicUpdated(self, user, channel, newTopic):
-        """In channel, user changed the topic to newTopic.
-
-        Also called when first joining a channel.
-        """
-        pass</code></pre>
-</section>
-
-<section class="slide">
-  <h2>IRC protocol example</h2>
-
-  <pre><code class="python lined">class YourIRCBot(IRCClient):
-    def userJoined(self, user, channel):
-      self.transport.write("Hello " + user)
-
-class BotFactory(t.i.p.ReconnectingClientFactory):
-  protol = YourIRCBot
-
-reactor.connectTCP("irc.freenode.net", 6667, BotFactory())
-reactor.run()
-  </code></pre>
-</section>
-
-<section class="slide">
-  <h2>Foreign Loop support</h2>
-
-  <ul>
-    <li>Twisted can integrate with foreign event loops, such as those of GTK+, Qt and Cocoa (through PyObjC)</li>
-    <li>This allows using Twisted as the networking support layer in graphical user interface (GUI)</li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>Caveats</h2>
-  <ul>
-    <li>Database access
-      <ul>
-        <li>Kinda complicated due to non-blocking requirement</li>
-        <li>byt there is <a href="https://github.com/alex/alchimia">Alchimia</a></li>
-        <li><a href="http://evennia.com/">evennia MUD project</a> somehow using Django ORM</li>
-        <li>SQLalchemy can be used w/ deferToThread</li>
-        <li><code>twisted.enterprise.adbapi</code> asynchronous DB-API v2.0 (raw SQL)</li>
-        <li><a href="http://findingscience.com/twistar/">Twistar</a> Active Record for Twisted</li>
-      </ul>
-    </li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>Caveats</h2>
-  <ul>
-    <li>Twisted's unit test runner - Trial<ul>
-      <li>some errors manifest in later test cases</li>
-      <li>incorrect tests may hang forever</li>
-      </ul>
-    </li>
-  </ul>
-</section>
-
-<section class="slide">
-  <h2>Caveats</h2>
-  <ul>
-    <li>Twisted as a platform<ul>
-      <li>Most of the libraries are synchronous -> shortage of libs that play well with twisted</li>
-      <li>Relatively small community and slow progress on new standards</li>
-      </ul>
-    </li>
-  </ul>
-</section>
-
 
 <section class="slide">
   <h2>Footnotes</h2>
 
   <ul>
-    <li>Twisted at AOSABook <a href="http://www.aosabook.org/en/twisted.html">aosabook.org/en/twisted.html</a></li>
-    <li>Exhaustive Twisted tutorial at krondo.com <a href="http://krondo.com/?page_id=1327">http://krondo.com/?page_id=1327</a></li>
+    <li>Typeclassopedia
+        <a href="http://www.haskell.org/haskellwiki/Typeclassopedia">
+            http://www.haskell.org/haskellwiki/Typeclassopedia
+        </a>
+    </li>
   </ul>
 
   <ul class="TODO">
-    <li>Slides hosted at <a href="http://yaccz.github.com/slides-twisted-intro/">yaccz.github.com/slides-twisted-intro/</a></li>
+    <li>Slides hosted at <a href="http://yaccz.github.com/slides-haskell-intro/">yaccz.github.com/slides-haskell-intro/</a></li>
     <li><a href="https://twitter.com/yaccz">@yaccz</a></li>
   </ul>
 </section>
