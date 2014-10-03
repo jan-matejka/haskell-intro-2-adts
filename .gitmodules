@@ -1,6 +1,6 @@
 [submodule "deck"]
 	path = deck
 	url = https://github.com/yaccz/deck.js.git
-[submodule "highlight"]
-	path = highlight
-	url = https://github.com/isagalaev/highlight.js.git
+[submodule "rainbow"]
+	path = rainbow
+	url = https://github.com/ccampbell/rainbow.git
