@@ -1,5 +1,5 @@
 ask               = putStrLn "What's your name?"
-welcome name      = putStrLn ("Hello " ++ name)
 _getLine  unused  = getLine
+welcome   name    = putStrLn ("Hello " ++ name)
 
 main = ask >>= _getLine >>= welcome
