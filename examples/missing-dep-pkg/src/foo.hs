@@ -1,3 +1,3 @@
 import Data.Numbers.Fibonacci
 
-main = putStrLn $ show fib [0..4]
+main = putStrLn $ show $ map fib [0..4]

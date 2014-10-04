@@ -1,0 +1,1 @@
+../../missing-dep-pkg/src/foo.hs

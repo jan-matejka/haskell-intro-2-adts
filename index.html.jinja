@@ -311,6 +311,14 @@ head []                 =  error "Empty list"</code></pre>
 <pre><code>{{ Data3HsOut }}</code></pre>
 </section>
 
+<section class="slide">
+    <h2>Cabal - Packaging</h2>
+<h3>pkg.git/src/foo.hs</h3>
+<pre><code data-language="haskell">{% include "./examples/missing-dep-pkg/src/foo.hs" %}</code></pre>
+
+<h3>% runhaskell pkg.git/src/foo.hs</h3>
+<pre><code data-language="haskell">{% include "./examples/missing-dep-pkg/src/foo.hs.out" %}</code></pre>
+</section>
 
 <section class="slide">
     <h2>Cabal - Packaging</h2>
@@ -320,11 +328,17 @@ head []                 =  error "Empty list"</code></pre>
 
 <section class="slide">
     <h2>Cabal - Packaging</h2>
-<h3>pkg.git/src/foo.hs</h3>
-<pre><code data-language="haskell">{% include "./examples/missing-dep-pkg/src/foo.hs" %}</code></pre>
+<pre><code>{% include "./examples/missing-dep-pkg.ou"  %}</code></pre>
+</section>
 
+<section class="slide">
+    <h2>Cabal - Packaging</h2>
+<pre><code data-language="diff">{% include "./examples/missing-dep-pkg.fix.diff"  %}</code></pre>
+</section>
 
-<pre><code>{% include "./examples/missing-dep-pkg.out" %}</code></pre>
+<section class="slide">
+    <h2>Cabal - Packaging</h2>
+<pre><code>{% include "./examples/missing-dep-fixed-pkg.ou"  %}</code></pre>
 </section>
 
 <section class="slide">

@@ -2,3 +2,4 @@
 /examples/*.ou
 *.out
 dist
+*.diff
