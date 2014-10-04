@@ -337,6 +337,19 @@ head []                 =  error "Empty list"</code></pre>
 </section>
 
 <section class="slide">
+    <h2>Hspec with cabal</h2>
+<pre><code data-language="haskell">Test-Suite unit
+  type:                 exitcode-stdio-1.0
+  main-is:              main.hs
+  hs-source-dirs:       tests/unit
+  build-depends:        base
+  default-language:     Haskell2010</code></pre>
+
+<pre><code>% cabal test</code></pre>
+
+</section>
+
+<section class="slide">
   <h2>Footnotes</h2>
 
     <!-- end with: And that's just the tip of the iceberg, lol -->
