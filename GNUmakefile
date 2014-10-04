@@ -1,4 +1,4 @@
-OUTS=Type Compo Import
+OUTS=Type Compo Import Data
 
 build:
 
