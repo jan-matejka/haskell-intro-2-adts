@@ -1,7 +1,7 @@
 data Color = Red | Blue
 
 instance Show Color where
-    show Red = "red"
-    show Blue = "blue"
+    show Red = "Red"
+    show Blue = "Blue"
 
 main = putStrLn $ show $ Red
