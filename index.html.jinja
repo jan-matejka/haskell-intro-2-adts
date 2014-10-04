@@ -82,6 +82,63 @@ Hello World!</code></pre>
 
 <section class="slide">
     <h2>Haskell is purely functional</h2>
+    <!--
+        So it is oriented on functions a lot and we can do cool stuff
+        with them.
+     -->
+
+<h3>Take list of strings, convert to ints and decrement</h3>
+<pre><code data-language="haskell">{{ CompositionHs }}</code></pre>
+<pre><code data-language="python">{{ CompositionPy }}</code></pre>
+<pre><code data-language="python">{{ Composition0_1Py }}</code></pre>
+<h3>Output</h3>
+<pre><code data-language="haskell">{{ CompositionHsOut }}</code></pre>
+
+</section>
+
+<section class="slide">
+    <h2>Haskell is purely functional</h2>
+
+<h3>Application</h3>
+<pre><code data-language="haskell">{{ CompositionHs }}</code></pre>
+<pre><code data-language="haskell">{{ Composition2Hs }}</code></pre>
+
+</section>
+
+<section class="slide">
+    <h2>Haskell is purely functional</h2>
+
+<h3>Composition</h3>
+<pre><code data-language="haskell">{{ Composition2Hs }}</code></pre>
+<pre><code data-language="haskell">{{ Composition3Hs }}</code></pre>
+
+<pre><code data-language="haskell">read          :: String -> Int
+pred          :: Int    -> Int
+(pred . read) :: String -> Int</code></pre>
+
+</section>
+
+<section class="slide">
+    <h2>Haskell is purely functional</h2>
+
+<h3>Partial Application</h3>
+
+<pre><code data-language="haskell">{{ Composition3Hs }}</code></pre>
+<pre><code data-language="haskell">{{ Composition4Hs }}</code></pre>
+
+</section>
+
+<section class="slide">
+    <h2>Haskell is purely functional</h2>
+
+    <!--
+        Let's define more functions
+     -->
+<pre><code data-language="haskell">{{ WhatsYourNameExpandedHs }}</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Haskell is purely functional</h2>
 
     <!--
         But it sure does look imperative, doesn't it.
@@ -156,6 +213,27 @@ head []                 =  error "Empty list"</code></pre>
 </section>
 
 <section class="slide">
+    <h2>Hoogle</h2>
+
+    <!--
+        Say you need a function to split string into substrings by some
+        delimiter, like a space. How do you search for?
+    -->
+
+    <p>How do you find a function by it's meaning?</p>
+
+    <p><a href="http://www.haskell.org/hoogle/?hoogle=String+->+%5BString%5D">
+        You hoogle it by Type Signature:: <code>String -> [String]</code>
+    </a></p>
+
+    <!-- first results: exatch match lines, words.
+         then including IO monad and more generic ones like
+            a ->  [a]
+            or type aliased like [FilePath] -> FilePath
+    -->
+</section>
+
+<section class="slide">
     <h2>Types - aliases</h2>
     <!--
 
@@ -167,6 +245,8 @@ head []                 =  error "Empty list"</code></pre>
            signature documents type
            no need for ":param p"
            also why haskell programmers often use one-char variables
+
+        4, More hoogling! (Hoogle for the Type Alias)
     -->
 
 <pre><code data-language="python">{{ TypeAliasPy }}</code></pre>

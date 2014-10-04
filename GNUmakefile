@@ -1,4 +1,4 @@
-OUTS=Type
+OUTS=Type Compo
 
 build:
 
