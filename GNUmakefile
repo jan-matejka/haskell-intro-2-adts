@@ -1,4 +1,4 @@
-OUTS=Type Compo Import Data
+OUTS=Type Compo Import Data Hspec
 
 build:
 
