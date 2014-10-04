@@ -1,10 +1,6 @@
-#! /usr/bin/python
+#! /usr/bin/python2
 
-try:
-    from jinja2 import Template
-except ImportError:
-    from jinja import from_string as Template
-
+from jinja2 import Template, Environment, FileSystemLoader
 from os import listdir
 
 manglers = {
@@ -25,6 +21,10 @@ bpath = "./examples/"
 xs = listdir(bpath)
 xs = [x for x in xs if x[-3:] in manglers.keys()]
 xs = [(mangle(x), open(bpath + x).read().strip()) for x in xs]
-tpl = Template(open("./index.html.jinja").read())
 
-open("./index.html", "w").write(tpl.render(**dict(xs)))
+open("./index.html", "w").write(
+    Environment(loader = FileSystemLoader('./')).\
+        get_template("./index.html.jinja").\
+        render(**dict(xs)).\
+        encode("utf-8")
+)
