@@ -1,1 +1,0 @@
-fn = lambda: "A"

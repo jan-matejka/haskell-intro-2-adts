@@ -34,349 +34,190 @@
 <!-- Begin slides. Just make elements with a class of slide. -->
 
 <section class="slide">
-  <h2>Haskell</h2>
+  <h2>Algebraic Data Types in Haskell</h2>
 
-    <div>
-        This is not a Monad tutorial.
+    <section class="slide">
+        <h3>Two kinds</h3>
 
-        <br><br>
-        <br><br>
-
-        <a href="https://byorgey.wordpress.com/2009/01/12/abstraction-intuition-and-the-monad-tutorial-fallacy/">Monad tutorial fallacy</a><br>
-        <a href="http://www.haskell.org/haskellwiki/Monad_tutorials_timeline">Monad tutorial timeline</a><br>
-        <a href="http://blog.plover.com/prog/burritos.html">Monads are burritos</a><br>
-    </div>
+        <ul>
+            <li>Sum type</li>
+            <li>Product type</li>
+        </ul>
+    </section>
 </section>
 
 <section class="slide">
-    <h2>Getting started</h2>
+    <h2>Sum type in C</h2>
 
-    <pre><code data-language="shell">emerge ghc cabal-install</code></pre>
-
-    <pre><code data-language="shell">zypper in ghc cabal-install</code></pre>
+    <pre><code data-language="c">enum color {
+    RED = 1,
+    GREEN = 2,
+    BLUE = 3
+};</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Hello World</h2>
+    <h2>"Sum" type in Python</h2>
 
-    <!-- this what a function definition looks like.
-         main is a function.
-         putStrLN is a function, "Hello World!" is putStrLn argument
-     -->
-    <pre><code data-language="haskell">{{ HelloWorldHs }}</code></pre>
+    <pre><code data-language="python">class Color(object): pass
 
-    <pre><code>% runhaskell main.hs
-Hello World!</code></pre>
+class Red(Color): pass
+class Green(Color): pass
+class Blue(Color): pass</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
-    <!--
-        So it is oriented on functions a lot and we can do cool stuff
-        with them.
-     -->
+    <h2>Sum type in Haskell</h2>
 
-<h3>Take list of strings, convert to ints and decrement</h3>
-<pre><code data-language="haskell">{{ CompositionHs }}</code></pre>
-<pre><code data-language="python">{{ CompositionPy }}</code></pre>
-<pre><code data-language="python">{{ Composition0_1Py }}</code></pre>
-<h3>Output</h3>
-<pre><code data-language="haskell">{{ CompositionHsOut }}</code></pre>
+    <pre><code data-language="haskell">data Color = Red | Green | Blue</code></pre>
 
+    <pre><code>"data" TypeName "=" Constructor [ ("|" Constructor) ]</pre></code>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
-
-<h3>Application</h3>
-<pre><code data-language="haskell">{{ CompositionHs }}</code></pre>
-<pre><code data-language="haskell">{{ Composition2Hs }}</code></pre>
-
+    <h2>"Product" type in Python</h2>
+    <pre><code data-language="python">class Person(object):
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
-
-<h3>Composition</h3>
-<pre><code data-language="haskell">{{ Composition2Hs }}</code></pre>
-<pre><code data-language="haskell">{{ Composition3Hs }}</code></pre>
-
-<pre><code data-language="haskell">read          :: String -> Int
-pred          :: Int    -> Int
-(pred . read) :: String -> Int</code></pre>
-
+    <h2>Product type in Haskell</h2>
+    <pre><code data-language="haskell">-- | Person Name Surname
+data Person = Person String String</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
+    <h2>Product type in Haskell</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
 
-<h3>Partial Application</h3>
-
-<pre><code data-language="haskell">{{ Composition3Hs }}</code></pre>
-<pre><code data-language="haskell">{{ Composition4Hs }}</code></pre>
-
+type Name    = String
+type Surname = String</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
-
-    <!--
-        But it sure does look imperative, doesn't it.
-
-        Don't forget to explain the arrow: <-
-
-            execute computation given by RHS and bind it's result into LHS
-     -->
-<pre><code data-language="haskell">{{ WhatsYourNameHs }}</code></pre>
-
-<pre><code>% runhaskell main.hs
-What's your name?
-Bob
-Hello Bob</code></pre>
+    <h2>Every type is Sum Type</h2>
+    <pre><code data-language="haskell">data Tree = Empty
+          | Leaf a
+          | Node Tree Tree</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
+    <h2>The same tree in python</h2>
+    <pre><code data-language="python">class Tree(object): pass
 
-    <!--
-        Let's define more functions
-     -->
-<pre><code data-language="haskell">{{ WhatsYourNameExpandedHs }}</code></pre>
+class Empty(Tree):  pass
+
+class Leaf(Tree):
+    def __init__(self, value):
+        """
+        :type value: object
+        """
+        self.value = value
+
+class Node(Tree):
+    def __init__(self, c1, c2):
+        """
+        :type c1: L{Tree}
+        :type c2: L{Tree}
+        """
+        self.child1 = c1
+        self.child2 = c2</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Haskell is purely functional</h2>
+    <h2>Show typeclass</h2>
+    <pre><code data-language="python">class Person(object):
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
 
-    <!--
-        Do notation - syntactic sugar for bind
+print repr(Person("John", "Doe"))</code></pre>
 
-        It's functions all the way down.
-     -->
-<pre><code data-language="haskell">{{ WhatsYourNameBindHs }}</code></pre>
-
-<pre><code data-language="haskell">(>>=) :: Monad m => m a -> (a -> m b) -> m b</code></pre>
-
-    <p>
-    A "complicated" way of saying
-
-    <pre><code>LHS >>= RHS</code></pre>
-
-    Execute LHS and pass it's result into RHS and execute it.
-    </p>
-
+    <pre><code><__main__.Person instance at 0x7fa7910983f8></code></pre>
 </section>
 
 <section class="slide">
-    <h2>GHCi - getting type signatures</h2>
+    <h2>Show typeclass</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
 
-    <!--
-        1. show ghci and explain type signatures.
-        Omit the TypeClass Constraints, that may come later.
+type Name    = String
+type Surname = String
 
-        2. explain pattern guards with mutliple definitions
+main = print (Person "John" "Doe")</code></pre>
 
-        3. highlight consciseness of haskell signature compared to
-           python
-    -->
-
-<pre><code>% ghci
-Prelude> :t head</code></pre>
-<pre><code data-language="haskell">head :: [a] -> a
-head (x:_)              =  x
-head []                 =  error "Empty list"</code></pre>
-<pre><code data-language="python">def head(xs):
-    """
-    :type xs: [object]
-    :returns: object
-    """
-    return xs[0]</code></pre>
+    <pre><code>a.hs:8:8:
+    No instance for (Show Person) arising from a use of ‘print’
+    In the expression: print (Person "John" "Doe")
+    In an equation for ‘main’: main = print (Person "John" "Doe")</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Hoogle</h2>
+    <h2>Show typeclass</h2>
+    <pre><code data-language="python">class Person(object):
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
 
-    <!--
-        Say you need a function to split string into substrings by some
-        delimiter, like a space. How do you search for?
-    -->
+    def __repr__(self):
+        return "<{0} {1} {2}>".format(
+          self.__class__
+        , repr(self.name)
+        , repr(self.surname)
+        )
 
-    <p>How do you find a function by it's meaning?</p>
+print repr(Person("John", "Doe"))</code></pre>
 
-    <p><a href="http://www.haskell.org/hoogle/?hoogle=String+->+%5BString%5D">
-        You hoogle it by Type Signature:: <code>String -> [String]</code>
-    </a></p>
-
-    <p>
-        or <a href="http://hayoo.fh-wedel.de/">hayoo</a>
-    </p>
-
-    <!-- first results: exatch match lines, words.
-         then including IO monad and more generic ones like
-            a ->  [a]
-            or type aliased like [FilePath] -> FilePath
-    -->
+    <pre><code><__main__.Person 'John' 'Doe'></code></pre>
 </section>
 
 <section class="slide">
-    <h2>Types - aliases</h2>
-    <!--
+    <h2>Show typeclass</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
 
-        1. Prelude = stdlib
+type Name    = String
+type Surname = String
 
-        2. explain import, hiding
+instance Show Person where
+    show (Person n s) = "Person \"" ++ n ++ "\" \"" ++ s ++ "\""
 
-        3. Easy type alias
-           signature documents type
-           no need for ":param p"
-           also why haskell programmers often use one-char variables
+main = print (Person "John" "Doe")</code></pre>
 
-        4, More hoogling! (Hoogle for the Type Alias)
-    -->
-
-<pre><code data-language="python">{{ TypeAliasPy }}</code></pre>
-<pre><code>{{ TypeAliasPyOut }}</code></pre>
-<pre><code data-language="haskell">{{ TypeAliasHs }}</code></pre>
-<pre><code>{{ TypeAliasHsOut }}</code></pre>
+    <pre><code>Person "John" "Doe"</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Imports</h2>
-    <!--
-        .. lazy eval
-    -->
+    <h2>Show typeclass derivation</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+    deriving (Show)
 
-<pre><code data-language="haskell">{{ ImportsHs }}</code></pre>
-<pre><code>{{ ImportsHsOut }}</code></pre>
+type Name    = String
+type Surname = String
+
+main = print (Person "John" "Doe")</code></pre>
+
+    <pre><code>Person "John" "Doe"</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Imports</h2>
-<h3>ImportsMain.py</h3>
-<pre><code data-language="python">{{ ImportsPy }}</code></pre>
-<h3>ImportsA.py</h3>
-<pre><code data-language="python">{{ ImportsAPy }}</code></pre>
-<h3>ImportsB.py</h3>
-<pre><code data-language="python">{{ ImportsBPy }}</code></pre>
-<h3>% python ImportsMain.py</h3>
-<pre><code>{{ ImportsPyOut }}</code></pre>
+    <h2>Show & Read -> Guaranteed laws</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+    deriving (Show, Read)
+
+type Name    = String
+type Surname = String</code></pre>
+
+    <pre><code>x == read (show x)</code></pre>
 </section>
 
 <section class="slide">
-    <h2>Imports</h2>
-<pre><code data-language="haskell">{{ Imports2Hs }}</code></pre>
-<pre><code>{{ Imports2HsOut }}</code></pre>
-</section>
+  <h2>Thank you</h2>
 
-<section class="slide">
-    <!-- other solutions: qualified, explicit list import -->
-    <h2>Imports</h2>
-<pre><code data-language="haskell">{{ Imports3Hs }}</code></pre>
-<pre><code>{{ Imports3HsOut }}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Types - Data</h2>
-<pre><code data-language="haskell">{{ DataHs }}</code></pre>
-<pre><code>{{ DataHsOut }}</code></pre>
-
-<pre><code data-language="python">{{ DataPy }}</code></pre>
-<pre><code>{{ DataPyOut }}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Types - Polymorphism</h2>
-<pre><code data-language="haskell">{{ Data2Hs }}</code></pre>
-<pre><code>{{ Data2HsOut }}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Types - Polymorphism</h2>
-<pre><code data-language="haskell">{{ Data3Hs }}</code></pre>
-<pre><code>{{ Data3HsOut }}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Cabal - Packaging</h2>
-<h3>pkg.git/src/foo.hs</h3>
-<pre><code data-language="haskell">{% include "./examples/missing-dep-pkg/src/foo.hs" %}</code></pre>
-
-<h3>% runhaskell pkg.git/src/foo.hs</h3>
-<pre><code data-language="haskell">{% include "./examples/missing-dep-pkg/src/foo.hs.out" %}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Cabal - Packaging</h2>
-<h3>pkg.git/haskell-intro-slides.cabal</h3>
-<pre><code data-language="haskell">{% include "./examples/missing-dep-pkg/haskell-intro-slides.cabal" %}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Cabal - Packaging</h2>
-<pre><code>{% include "./examples/missing-dep-pkg.ou"  %}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Cabal - Packaging</h2>
-<pre><code data-language="diff">{% include "./examples/missing-dep-pkg.fix.diff"  %}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Cabal - Packaging</h2>
-<pre><code>{% include "./examples/missing-dep-fixed-pkg.ou"  %}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Hspec - testing</h2>
-<pre><code data-language="haskell">{% include "./examples/Hspec.hs"  %}</code></pre>
-<pre><code>{% include "./examples/Hspec.hs.ou"  %}</code></pre>
-</section>
-
-<section class="slide">
-    <h2>Hspec with cabal</h2>
-<pre><code data-language="haskell">Test-Suite unit
-  type:                 exitcode-stdio-1.0
-  main-is:              main.hs
-  hs-source-dirs:       tests/unit
-  build-depends:        base
-  default-language:     Haskell2010</code></pre>
-
-<pre><code>% cabal test</code></pre>
-
-</section>
-
-<!-- TODO:
-
-* Maybe Monad
-
-* Funktors
-
-* IO Monad to generate effects
-
-* Catching "exceptions"
-
-* -Wall helpful warnings
-
--->
-
-<section class="slide">
-  <h2>Footnotes</h2>
-
-    <!-- end with: And that's just the tip of the iceberg, lol -->
 
   <ul>
-    <li>Typeclassopedia
-        <a href="http://www.haskell.org/haskellwiki/Typeclassopedia">
-            http://www.haskell.org/haskellwiki/Typeclassopedia
-        </a>
-    </li>
-  </ul>
-
-  <ul>
-    <li><a href="http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/#documentation-tests">Haskell Skeleton Project </a>
-    <li>Slides <a href="http://blog.headdesk.cz/media/haskell/">http://blog.headdesk.cz/media/haskell/</a></li>
-    <li>Slides source &amp; code examples at <a
-href="https://github.com/yaccz/slides-haskell-intro">github.com/yaccz/slides-haskell-intro</a>
-    <li><a href="https://twitter.com/yaccz">@yaccz</a></li>
+    <li>Slides at <a
+href="https://github.com/yaccz/slides-haskell-intro">github.com/yaccz/haskell-intro-2-adts</a>
   </ul>
 </section>
 <!-- End slides. -->
