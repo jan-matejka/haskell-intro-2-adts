@@ -49,23 +49,12 @@
 </section>
 
 <section class="slide">
-    <h2>Sum type in C</h2>
+    <h2>Sum type in Python</h2>
 
-    <pre><code data-language="c">enum color {
-    RED = 1,
-    GREEN = 2,
-    BLUE = 3
-};</code></pre>
-</section>
-
-<section class="slide">
-    <h2>"Sum" type in Python</h2>
-
-    <pre><code data-language="python">class Color(object): pass
-
-class Red(Color): pass
-class Green(Color): pass
-class Blue(Color): pass</code></pre>
+    <pre><code data-language="python">class Color(Enum):
+    red = 1
+    green = 2
+    blue = 3</code></pre>
 </section>
 
 <section class="slide">
