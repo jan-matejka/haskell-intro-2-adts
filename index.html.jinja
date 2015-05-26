@@ -88,6 +88,17 @@ data Person = Person String String</code></pre>
 
 type Name    = String
 type Surname = String</code></pre>
+
+    <h3>Accessing attributes</h3>
+    <pre><code data-language="haskell">name :: Person -&gt; Name
+name (Person n _) = n</code></pre>
+
+    <h3>Record syntax</h3>
+
+    <pre><code data-language="haskell">data Person = Person
+            { name    :: Name
+            , surname :: Surname
+            }</code></pre>
 </section>
 
 <section class="slide">
