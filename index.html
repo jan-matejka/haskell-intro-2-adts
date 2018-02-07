@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=1024, user-scalable=no">
+
+  <title>User Defined Types in Haskell</title>
+
+  <!-- Required stylesheet -->
+  <link rel="stylesheet" href="deck/core/deck.core.css">
+
+  <!-- Extension CSS files go here. Remove or add as needed. -->
+  <link rel="stylesheet" href="deck/extensions/goto/deck.goto.css">
+  <link rel="stylesheet" href="deck/extensions/menu/deck.menu.css">
+  <link rel="stylesheet" href="deck/extensions/navigation/deck.navigation.css">
+  <link rel="stylesheet" href="deck/extensions/status/deck.status.css">
+  <link rel="stylesheet" href="deck/extensions/hash/deck.hash.css">
+  <link rel="stylesheet" href="deck/extensions/scale/deck.scale.css">
+
+    <link href="./rainbow/themes/blackboard.css" rel="stylesheet" type="text/css" media="screen">
+  <!-- Style theme. More available in /themes/style/ or create your own. -->
+  <link rel="stylesheet" href="deck/themes/style/web-2.0.css">
+
+  <!-- Transition theme. More available in /themes/transition/ or create your own. -->
+  <link rel="stylesheet" href="deck/themes/transition/horizontal-slide.css">
+
+  <link rel="stylesheet" type="text/css" href="./rainbow.linenumbers/theme.css" media="screen" />
+  <!-- Required Modernizr file -->
+  <script src="deck/modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+  <h2>User Defined Types in Haskell</h2>
+
+    <h3>From point of view of python programmer.</h3>
+
+    <section class="slide">
+        <h3>Two kinds</h3>
+
+        <ul>
+            <li>Sum type</li>
+            <li>Product type</li>
+        </ul>
+    </section>
+</section>
+
+<section class="slide">
+    <h2>Sum type in Python</h2>
+
+    <pre><code data-language="python">class Color(Enum):
+    red = 1
+    green = 2
+    blue = 3</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Sum type in Haskell</h2>
+
+    <pre><code data-language="haskell">data Color = Red | Green | Blue</code></pre>
+
+    <pre><code>"data" TypeName "=" Constructor [ ("|" Constructor) ]</pre></code>
+</section>
+
+<section class="slide">
+    <h2>Product type in Python</h2>
+    <pre><code data-language="python">class Person(object):
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Product type in Haskell</h2>
+    <pre><code data-language="haskell">-- | Person Name Surname
+data Person = Person String String</code></pre>
+
+
+    <pre><code>"data" TypeName "=" Constructor [ ArgumentType ]</pre></code>
+</section>
+
+<section class="slide">
+    <h2>Product type in Haskell</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+
+type Name    = String
+type Surname = String</code></pre>
+
+    <h3>Accessing attributes</h3>
+    <pre><code data-language="haskell">name :: Person -&gt; Name
+name (Person n _) = n</code></pre>
+
+    <h3>Record syntax</h3>
+
+    <pre><code data-language="haskell">data Person = Person
+            { name    :: Name
+            , surname :: Surname
+            }</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Every type is Sum Type</h2>
+    <pre><code data-language="haskell">data Tree = Empty
+          | Leaf a
+          | Node Tree Tree</code></pre>
+</section>
+
+<section class="slide">
+    <h2>The same tree in python</h2>
+    <pre><code data-language="python">class Tree(object): pass
+
+class Empty(Tree):  pass
+
+class Leaf(Tree):
+    def __init__(self, value):
+        """
+        :type value: object
+        """
+        self.value = value
+
+class Node(Tree):
+    def __init__(self, c1, c2):
+        """
+        :type c1: L{Tree}
+        :type c2: L{Tree}
+        """
+        self.child1 = c1
+        self.child2 = c2</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Show typeclass</h2>
+    <pre><code data-language="python">class Person(object):
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
+
+print repr(Person("John", "Doe"))</code></pre>
+
+    <pre><code><__main__.Person instance at 0x7fa7910983f8></code></pre>
+</section>
+
+<section class="slide">
+    <h2>Show typeclass</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+
+type Name    = String
+type Surname = String
+
+main = print (Person "John" "Doe")</code></pre>
+
+    <pre><code>a.hs:8:8:
+    No instance for (Show Person) arising from a use of ‘print’
+    In the expression: print (Person "John" "Doe")
+    In an equation for ‘main’: main = print (Person "John" "Doe")</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Show typeclass</h2>
+    <pre><code data-language="python">class Person(object):
+    def __init__(self, name, surname):
+        self.name = name
+        self.surname = surname
+
+    def __repr__(self):
+        return "<{0} {1} {2}>".format(
+          self.__class__
+        , repr(self.name)
+        , repr(self.surname)
+        )
+
+print repr(Person("John", "Doe"))</code></pre>
+
+    <pre><code><__main__.Person 'John' 'Doe'></code></pre>
+</section>
+
+<section class="slide">
+    <h2>Show typeclass</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+
+type Name    = String
+type Surname = String
+
+instance Show Person where
+    show (Person n s) = "Person \"" ++ n ++ "\" \"" ++ s ++ "\""
+
+main = print (Person "John" "Doe")</code></pre>
+
+    <pre><code>Person "John" "Doe"</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Show typeclass derivation</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+    deriving (Show)
+
+type Name    = String
+type Surname = String
+
+main = print (Person "John" "Doe")</code></pre>
+
+    <pre><code>Person "John" "Doe"</code></pre>
+</section>
+
+<section class="slide">
+    <h2>Show & Read -> Guaranteed laws</h2>
+    <pre><code data-language="haskell">data Person = Person Name Surname
+    deriving (Show, Read)
+
+type Name    = String
+type Surname = String</code></pre>
+
+    <pre><code>x == read (show x)</code></pre>
+</section>
+
+<section class="slide">
+  <h2>Thank you</h2>
+
+
+  <ul>
+    <li>Slides at <a
+href="https://github.com/yaccz/haskell-intro-2-adts">github.com/yaccz/haskell-intro-2-adts</a>
+  </ul>
+</section>
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+  <span class="deck-status-current"></span>
+  /
+  <span class="deck-status-total"></span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+  <label for="goto-slide">Go to slide:</label>
+  <input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+  <datalist id="goto-datalist"></datalist>
+  <input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="deck/jquery-1.7.2.min.js"></script>
+<script src="deck/core/deck.core.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="deck/core/deck.core.js"></script>
+<script src="deck/extensions/hash/deck.hash.js"></script>
+<script src="deck/extensions/menu/deck.menu.js"></script>
+<script src="deck/extensions/goto/deck.goto.js"></script>
+<script src="deck/extensions/status/deck.status.js"></script>
+<script src="deck/extensions/navigation/deck.navigation.js"></script>
+<script src="deck/extensions/scale/deck.scale.js"></script>
+
+<style type="text/css">
+.slide pre {
+background: #0B1022!important;
+/* override the background given by `.deck-container .slide pre`
+ * as that gets precedence before rainbows `pre`
+ * and I don't know how to make this `just ignore the deck style
+ * without patching or involving preprocessors like less
+ */
+
+font-size: 0.8em!important;
+/* for reason unknown to me the text is weirdly huge, so make it a bit
+ * smaller.
+ */
+}
+</style>
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+  $(function() {
+    $.deck('.slide');
+
+    // { mouse controll for the slides
+    document.oncontextmenu = function() {return false;};
+    $(document).mousedown(function(e){
+      arg='next';
+      if( e.button == 2 )
+        arg='prev';
+      $.deck(arg);
+    });
+    // }
+  });
+</script>
+
+    <script src="./rainbow/js/rainbow.js"></script>
+    <script src="./rainbow/js/language/haskell.js"></script>
+    <script src="./rainbow/js/language/shell.js"></script>
+    <script src="./rainbow/js/language/python.js"></script>
+    <script src="./rainbow.linenumbers/rainbow.linenumbers.js"></script>
+</body>
+</html>
