@@ -1,6 +1,7 @@
 Usage
 =====
-just open http://blog.headdesk.cz/media//talks/haskell-intro-2-adts
+
+Published at http://yaccz.github.io/haskell-intro-2-adts/
 
 or::
 
